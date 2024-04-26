@@ -1,0 +1,105 @@
+<html lang="" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>DC PRACS</title>
+</head>
+
+<body>
+
+    <pre>
+
+      client
+
+      import socket
+      import threading
+      
+      client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+      
+      def recving(client_socket):
+          while True:
+              try:
+                  reply = client_socket.recv(1024).decode('utf-8')
+                  if reply:
+                      print(reply)
+                  else:
+                      print("Server disconnected")
+              except:
+                  print("Disconnect")
+                  break
+          print("CLOSED")
+          client_socket.close()
+      
+      try:
+          client_socket.connect(('localhost', 8888))
+          print("Connected to server")
+          recieve_thread = threading.Thread(target=recving, args=(client_socket,))
+          recieve_thread.start()
+          while True:
+              message = input()
+              if message:
+                  client_socket.send(message.encode('utf-8'))
+                  message = ""
+      
+      except:
+          print("disconnected")
+          client_socket.close()
+      
+      print("EXIT")
+
+
+
+      server
+
+      import socket
+      import threading
+      
+      clients = []
+      lock = threading.Lock()
+      
+      def handle_client(client_socket, client_address):
+          print("Connected to", client_address)
+          while True:
+              try:
+                  message = client_socket.recv(1024).decode('utf-8')
+                  print(message)
+                  if message:
+                      broadcast(message, client_socket)
+                  else:
+                      remove(client_socket)
+              except:
+                  remove(client_socket)
+      
+      def broadcast(message, client_socket):
+          with lock:
+              for client in clients:
+                  if client != client_socket:
+                      try:
+                          client.sendall(message.encode('utf-8'))
+                      except:
+                          remove(client_socket)
+      
+      def remove(client_socket):
+          with lock:
+              print("EOL")
+              client_socket.close()
+              clients.remove(client_socket)
+      
+      server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+      server_socket.bind(('localhost', 8888))
+      server_socket.listen()
+      
+      while True:
+          client_socket, client_address = server_socket.accept()
+          client_thread = threading.Thread(target=handle_client, args=(client_socket, client_address))
+          client_thread.start()
+          with lock:
+              clients.append(client_socket)
+
+              
+     #def main(): 
+
+    </pre>
+
+</body>
+</html>

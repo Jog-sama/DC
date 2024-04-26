@@ -1,0 +1,52 @@
+<html lang="" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>DC PRACS</title>
+</head>
+
+<body>
+
+    <pre>
+
+        from datetime import datetime, timedelta
+
+        def cal_globalavg(times, agree):
+            diff_time = []
+            sum_diff_seconds = 0
+            
+            for time in times:
+                time_sec = time.hour * 3600 + time.minute * 60
+                agree_sec = agree.hour * 3600 + agree.minute * 60
+                diff_seconds = time_sec - agree_sec
+                diff_time.append(timedelta(seconds=abs(diff_seconds)))
+                sum_diff_seconds += diff_seconds
+                print(f"Time difference for {time}: {diff_time[-1]}")
+            
+            avg_seconds = sum_diff_seconds / len(times)
+            print(f"\nTotal seconds difference: {sum_diff_seconds}")
+            print(f"Average seconds difference: {avg_seconds}")
+            
+            final_seconds = time_sec - avg_seconds
+            final_time = timedelta(seconds=abs(final_seconds))
+            
+            print(f"\nFinal time: {final_time}")
+            
+            return final_time
+        
+        a_time = ['10:10', '10:15', '10:20', '10:25']
+        d_time = ['10:15', '10:20', '10:25', '10:30']
+        agree_time = '10:15'
+        
+        send_time = [datetime.strptime(i, "%H:%M").time() for i in a_time]
+        send_time2 = [datetime.strptime(i, "%H:%M").time() for i in d_time]
+        
+        print(send_time)
+        print(cal_globalavg(send_time, datetime.strptime(agree_time, "%H:%M").time()))
+        print(cal_globalavg(send_time2, datetime.strptime(agree_time, "%H:%M").time()))
+        
+        
+    </pre>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<html lang="" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>DC PRACS</title>
+</head>
+
+<body>
+
+    <pre>
+
+        numProcesses = int(input("Enter number of processes: "))
+        numCS = int(input("Enter number of processes that want to enter CS: "))
+        processMap = {}
+        timestamps = []
+        
+        for i in range(numCS):
+            process, timestamp = input(f"Enter the Process ID and Timestamp of process: ").split()
+            timestamps.append(int(timestamp))
+            processMap[int(timestamp)] = int(process)
+        
+        print("\nProcess Map:")
+        for k, v in processMap.items():
+            print(f"Process ID: {v}, Timestamp: {k}")
+        print("\nTimestamps:")
+        print(timestamps)
+        
+        timestamps.sort()
+        print("\nSorted timestamps:")
+        print(timestamps)
+        
+        for time in timestamps:
+            processcs = processMap[time]
+            for i in range(numProcesses):
+                if processcs != i:
+                    print(f"Process {processcs} has requested Process {i}")
+                    print()
+        
+        for time in timestamps:
+            processcs = processMap[time]
+            for i in range(numProcesses):
+                if processcs != i:
+                    print(f"Process {i} has accepted the request of Process {processcs}")
+                    print()
+            print(f'Process {processcs} has now entered the CS')
+            print(f'Process {processcs} has now exited the CS')
+            print()
+        
+        
+    </pre>
+
+</body>
+</html>

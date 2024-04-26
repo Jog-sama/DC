@@ -1,0 +1,61 @@
+<html lang="" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>DC PRACS</title>
+</head>
+
+<body>
+
+    <pre>
+
+        print("Enter the number of processes:")
+        n = int(input())
+        name = []
+        
+        print("The processes are:")
+        for i in range(n):
+            print(f"P{i}, process id {i}")
+            name.append(f'P{i}')
+        
+        c = list(range(0, n))
+        print(c)
+        print(name)
+        
+        coordinator = f"P{max(c)}"
+        
+        while True:
+            print('\n')
+            print(name)
+            print(c)
+            print("\nEnter 1 to crash a process, 2 for recovery of process, 3 to display coordinator, 4 to exit")
+            inp = int(input())
+            
+            if inp == 4:
+                break
+            
+            if inp == 3:
+                print("Current coordinator is", coordinator)
+            
+            if inp == 1:
+                print("Enter the process you want to crash:")
+                crash = int(input())
+                if crash == max(c):
+                    c.remove(crash)
+                    name.remove(f"P{crash}")
+                    coordinator = f"P{max(c)}"
+                else:
+                    c.remove(crash)
+                    name.remove(f"P{crash}")
+            
+            if inp == 2:
+                print("Enter the process to recover (write id as the name is the id):")
+                id = int(input())
+                c.append(id)
+                name.append(f"P{id}")
+        
+        
+    </pre>
+
+</body>
+</html>

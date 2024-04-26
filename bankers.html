@@ -1,0 +1,52 @@
+<html lang="" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>DC PRACS</title>
+</head>
+
+<body>
+
+    <pre>
+
+        allocated = [[1, 3, 4, 2], [1, 2, 3, 0], [1, 2, 3, 3]]
+        max_claim = [[3, 2, 2, 1], [2, 1, 3, 4], [1, 3, 4, 0]]
+        num_processes = 3
+        available = [3, 4, 1, 2]
+        safe_sequence = []
+        
+        need = [[max_claim[i][j] - allocated[i][j] for j in range(len(max_claim[0]))] for i in range(num_processes)]
+        print("Need Matrix:")
+        for row in need:
+            print(row)
+        
+        finish = [False] * num_processes
+        print("Finish array:", finish)
+        
+        available_resources = available[:]
+        
+        while True:
+            found = False
+            for i in range(num_processes):
+                if not finish[i] and all(need[i][j] <= available_resources[j] for j in range(len(available))):
+                    for j in range(len(available)):
+                        available_resources[j] += allocated[i][j]
+                    finish[i] = True
+                    safe_sequence.append(i)
+                    found = True
+        
+            if not found:
+                break
+        
+        print("Safe sequence:", safe_sequence)
+        
+        if all(finish):
+            print("System is in a safe state.")
+        else:
+            print("System is not in a safe state.")
+        
+        
+    </pre>
+
+</body>
+</html>

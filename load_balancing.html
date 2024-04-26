@@ -1,0 +1,71 @@
+<html lang="" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>DC PRACS</title>
+</head>
+
+<body>
+
+    <pre>
+
+        print("Enter the number of servers and processors:")
+        server, processor = input().split(',')
+        server = int(server)
+        processor = int(processor)
+        
+        def adjust():
+            processor_in_server = [0] * server
+            processor_cnt = processor
+            print(processor_in_server)
+            
+            i = 0
+            while i != -1:
+                if processor_cnt == 0:
+                    break
+                
+                processor_in_server[i] += 1
+                processor_cnt -= 1
+                
+                if i == (server)-1:
+                    i = -1
+                i += 1
+            
+            print(processor_in_server)
+        
+        print("1. Add Servers 2. Remove Servers 3. Add Processes 4. Remove Processes 5. Exit:")
+        
+        inp = int(input())
+        
+        if inp == 1:
+            print("Enter the number of extra servers:")
+            extra = int(input())
+            server += extra
+            adjust()
+        
+        elif inp == 2:
+            print("Enter the number of servers to remove:")
+            rm = int(input())
+            server -= rm
+            adjust()
+        
+        elif inp == 3:
+            print("Enter the number of extra processors:")
+            extra = int(input())
+            processor += extra
+            adjust()
+        
+        elif inp == 4:
+            print("Enter the number of processors to remove:")
+            rm = int(input())
+            processor -= rm
+            adjust()
+        
+        elif inp == 5:
+            pass
+        
+        
+    </pre>
+
+</body>
+</html>
